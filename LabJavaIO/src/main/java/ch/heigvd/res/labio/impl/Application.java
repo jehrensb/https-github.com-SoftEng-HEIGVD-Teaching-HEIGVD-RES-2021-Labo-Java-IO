@@ -138,6 +138,9 @@ public class Application implements IApplication {
       directories.mkdirs();
       File newQuote = new File(directories, filename);
       newQuote.createNewFile();
+//    FileWriter writer = new FileWriter(filePath);
+//    writer.write(quote.getQuoteSplitInLines());
+//    writer.close();
 
   }
   
