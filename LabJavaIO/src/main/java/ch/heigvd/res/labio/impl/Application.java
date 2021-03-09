@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  */
 public class Application implements IApplication {
 
+  /* [WIP] Fixing tests for applications */
   /**
    * This constant defines where the quotes will be stored. The path is relative
    * to where the Java application is invoked.
