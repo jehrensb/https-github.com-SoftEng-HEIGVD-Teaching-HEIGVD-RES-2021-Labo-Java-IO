@@ -133,12 +133,11 @@ public class Application implements IApplication {
    */
   void storeQuote(Quote quote, String filename) throws IOException{
 
-    String filePath = WORKSPACE_DIRECTORY + "/";
+    String filePath = WORKSPACE_DIRECTORY + "/" +  String.join("/", quote.getTags());
     File directories = new File(filePath);
       directories.mkdirs();
       File newQuote = new File(directories, filename);
       newQuote.createNewFile();
-
 
   }
   
