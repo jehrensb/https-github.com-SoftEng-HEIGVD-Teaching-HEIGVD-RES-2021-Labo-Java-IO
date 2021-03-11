@@ -4,8 +4,7 @@ import ch.heigvd.res.labio.interfaces.IFileExplorer;
 import ch.heigvd.res.labio.interfaces.IFileVisitor;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * This implementation of the IFileExplorer interface performs a depth-first
@@ -21,6 +20,9 @@ public class DFSFileExplorer implements IFileExplorer {
   public void explore(File rootDirectory, IFileVisitor visitor) {
     // get the list of all files and directories present in Root Directory
     File[] listOfFilesAndDirectory = rootDirectory.listFiles();
+    if(listOfFilesAndDirectory != null){
+      Arrays.sort(listOfFilesAndDirectory);
+    }
     visitor.visit(rootDirectory);
     // Make sure rootDirectory is a directory
     if (listOfFilesAndDirectory != null)
