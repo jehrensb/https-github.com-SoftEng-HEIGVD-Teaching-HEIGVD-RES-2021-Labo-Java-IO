@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
-  private static int nb_lines = 0;
-
+  private int nb_lines = 0;
+  private int prevChar = 0;
 
   public FileNumberingFilterWriter(Writer out) {
     super(out);
@@ -30,8 +30,6 @@ public class FileNumberingFilterWriter extends FilterWriter {
     while(len-- > 0){
       write(str.charAt(off++));
     }
-    nb_lines = 0;
-//    throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 
   @Override
@@ -39,27 +37,34 @@ public class FileNumberingFilterWriter extends FilterWriter {
     while(len-- > 0){
       write(cbuf[off++]);
     }
-    nb_lines = 0;
-//    throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 
   @Override
   public void write(int c) throws IOException {
-    if(nb_lines == 0){
-      out.write(nb_lines);
-      out.write(' ');
+    // First 1\t
+    if (nb_lines == 0) {
       nb_lines++;
+      out.write(String.valueOf(nb_lines));
+      out.write('\t');
     }
     // ASCII 13 -> \r ASCII 10 -> \n
-    if(c == 13 || c == 10){
+    if (c == 13) {
+        prevChar = c;
+        out.write(c);
+    } else if (c == 10) {
       out.write(c);
       nb_lines++;
-      out.write(nb_lines);
-      out.write(' ');
-    }else{
+      out.write(String.valueOf(nb_lines));
+      out.write('\t');
+      prevChar = 0;
+    } else {
+      if (prevChar != 0) {
+        nb_lines++;
+        out.write(String.valueOf(nb_lines));
+        out.write('\t');
+        prevChar = 0;
+      }
       out.write(c);
     }
-//    throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
-
 }

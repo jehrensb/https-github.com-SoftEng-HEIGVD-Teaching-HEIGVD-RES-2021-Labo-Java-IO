@@ -36,7 +36,6 @@ public class Utils {
     result[0] = splitted[0];
     result[1] = String.join(sep, Arrays.copyOfRange(splitted, 1, splitted.length));
     return result;
-//    throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 
 }
