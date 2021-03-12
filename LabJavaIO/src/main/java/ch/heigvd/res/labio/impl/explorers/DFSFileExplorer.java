@@ -25,20 +25,17 @@ public class DFSFileExplorer implements IFileExplorer {
         // Retrieve files and folders
         File[] files = rootDirectory.listFiles();
 
-        // Make sure that the directory is not empty, that there is no IOError and that the rootdirectory is a folder
-        if (rootDirectory.listFiles() != null && files.length != 0) {
+        // Make sure that there is no IOError and that the rootdirectory is a folder
+        if (files != null)
 
-            // Browse each file
-            for (File currentFile : files) {
-
-                // The current file is a folder -> recursively call exploration
-                if (currentFile.isDirectory())
-                    explore(currentFile, visitor);
-
-                else // currentFile is a file to visit
-                    visitor.visit(currentFile);
-            }
-        }
+            // Browse each file in alphabetical order
+            Arrays.stream(rootDirectory.listFiles())
+                    .sorted()
+                    .forEach(file -> {
+                        if (file.isDirectory())
+                            explore(file, visitor); // recursively call exploration
+                        else
+                            visitor.visit(file);
+                    });
     }
-
 }
