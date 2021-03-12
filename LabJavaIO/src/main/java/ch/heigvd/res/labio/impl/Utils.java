@@ -9,8 +9,10 @@ import java.util.logging.Logger;
 public class Utils {
 
     private static final Logger LOG = Logger.getLogger(Utils.class.getName());
-
-    private static final String[] LINE_SEPARATORS = {"\n", "\r", "\r\n"};
+    public static final char EOL_UNIX = '\n';
+    public static final char EOL_MACOS9 = '\r';
+    public static final String EOL_WINDOWS = "\r\n";
+    private static final String[] LINE_SEPARATORS = {String.valueOf(EOL_UNIX), String.valueOf(EOL_MACOS9), EOL_WINDOWS};
 
     /**
      * This method looks for the next new line separators (\r, \n, \r\n) to extract
