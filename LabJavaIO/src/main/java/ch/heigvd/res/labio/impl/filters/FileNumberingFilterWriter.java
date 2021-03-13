@@ -64,7 +64,7 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
         super.write(c);
 
-        if(last == Utils.EOL_MACOS9 || c == Utils.EOL_UNIX)
+        if(last == Utils.EOL_MACOS9.charAt(0) || c == Utils.EOL_UNIX.charAt(0))
             addLine();
 
         last = c;

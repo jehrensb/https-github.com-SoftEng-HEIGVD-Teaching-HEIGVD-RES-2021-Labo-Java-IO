@@ -1,6 +1,5 @@
 package ch.heigvd.res.labio.impl;
 
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -9,10 +8,9 @@ import java.util.logging.Logger;
 public class Utils {
 
     private static final Logger LOG = Logger.getLogger(Utils.class.getName());
-    public static final char EOL_UNIX = '\n';
-    public static final char EOL_MACOS9 = '\r';
+    public static final String EOL_UNIX = "\n";
+    public static final String EOL_MACOS9 = "\r";
     public static final String EOL_WINDOWS = "\r\n";
-    private static final String[] LINE_SEPARATORS = {String.valueOf(EOL_UNIX), String.valueOf(EOL_MACOS9), EOL_WINDOWS};
 
     /**
      * This method looks for the next new line separators (\r, \n, \r\n) to extract
@@ -25,13 +23,23 @@ public class Utils {
      */
     public static String[] getNextLine(String lines) {
         String[] result = {"", lines};
-        Arrays.stream(LINE_SEPARATORS).forEach(s -> {
-            if (lines.contains(s)) {
-                int index = lines.indexOf(s) + s.length();
-                result[0] = lines.substring(0, index);
-                result[1] = lines.substring(index);
-            }
-        });
+        String separator = null;
+
+        // EOL char detection
+        if (lines.contains(EOL_UNIX))
+            separator = EOL_UNIX;
+        else if (lines.contains(EOL_MACOS9))
+            separator = EOL_MACOS9;
+        else if (lines.contains(EOL_WINDOWS))
+            separator = EOL_WINDOWS;
+
+        // String split
+        if (separator != null) {
+            int index = lines.indexOf(separator) + separator.length();
+            result[0] = lines.substring(0, index);
+            result[1] = lines.substring(index);
+        }
+
         return result;
     }
 

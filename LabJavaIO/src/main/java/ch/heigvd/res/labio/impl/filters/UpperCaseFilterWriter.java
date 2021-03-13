@@ -3,7 +3,6 @@ package ch.heigvd.res.labio.impl.filters;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.lang.reflect.Array;
 import java.util.Locale;
 
 /**

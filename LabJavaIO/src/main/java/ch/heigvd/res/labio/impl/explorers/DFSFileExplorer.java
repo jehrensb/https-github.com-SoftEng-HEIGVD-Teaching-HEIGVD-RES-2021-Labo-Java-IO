@@ -25,7 +25,7 @@ public class DFSFileExplorer implements IFileExplorer {
         // Retrieve files and folders
         File[] files = rootDirectory.listFiles();
 
-        // Make sure that there is no IOError and that the rootdirectory is a folder
+        // Make sure that there is no IOError and that the root directory is a folder
         if (files != null)
 
             // Browse each file in alphabetical order
