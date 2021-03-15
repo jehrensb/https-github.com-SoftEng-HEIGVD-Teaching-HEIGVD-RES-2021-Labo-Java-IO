@@ -74,6 +74,7 @@ public class ApplicationTest {
         return file.endsWith(".utf8.out");
       }
     }, TrueFileFilter.INSTANCE);
+
     assertEquals(NUMBER_OF_QUOTES, files.size());
   }
 

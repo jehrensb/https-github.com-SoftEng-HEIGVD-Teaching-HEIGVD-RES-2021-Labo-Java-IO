@@ -9,11 +9,9 @@ import ch.heigvd.res.labio.quotes.Quote;
 import ch.heigvd.res.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,6 +96,7 @@ public class Application implements IApplication {
          * one method provided by this class, which is responsible for storing the content of the
          * quote in a text file (and for generating the directories based on the tags).
          */
+        storeQuote(quote,"quote-" + (i + 1) + ".utf8");
         LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
         for (String tag : quote.getTags()) {
           LOG.info("> " + tag);
@@ -133,7 +132,34 @@ public class Application implements IApplication {
    * @throws IOException 
    */
   void storeQuote(Quote quote, String filename) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    // => ./workspace/quotes/
+    StringBuilder path = new StringBuilder();
+    path.append(WORKSPACE_DIRECTORY + "/");
+
+    // => ./workspace/quotes/tagA/TagX/....
+    for (String tag : quote.getTags()) {
+      path.append(tag + "/");
+    }
+
+    // => ./workspace/quotes/tagA/TagX/filename
+    path.append(filename);
+
+    //Creating file
+    File file = new File(path.toString());
+    file.getParentFile().mkdirs(); //or append filename here
+
+    try {
+      FileWriter fileWriter = new FileWriter(file);
+      BufferedWriter out = new BufferedWriter(fileWriter);
+      out.write(quote.getQuote());
+      out.close();
+    }
+
+    catch (Exception e) {
+      e.getStackTrace();
+    }
+
   }
   
   /**
