@@ -1,5 +1,8 @@
 package ch.heigvd.res.labio.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -20,7 +23,25 @@ public class Utils {
    * contain any line separator, then the first element is an empty string.
    */
   public static String[] getNextLine(String lines) {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    List<String> lineSeparators = Arrays.asList("\n", "\r", "\r\n");
+    String[] newString = new String[]{"",""};
+
+    for (String separator : lineSeparators) {
+
+      int position = lines.indexOf(separator);
+
+      if(position > -1){
+        newString[0] = lines.substring(0, position + 1);
+        newString[1] = lines.substring(position + 1);
+        return newString;
+      }
+
+    }
+
+    newString[1] = lines;
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    return newString;
   }
 
 }
