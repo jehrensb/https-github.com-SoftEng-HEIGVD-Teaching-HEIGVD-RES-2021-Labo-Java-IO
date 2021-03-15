@@ -11,7 +11,6 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -176,6 +175,12 @@ public class Application implements IApplication {
          * of the the IFileVisitor interface inline. You just have to add the body of the visit method, which should
          * be pretty easy (we want to write the filename, including the path, to the writer passed in argument).
          */
+        try{
+
+          writer.write(file.getPath() + "\n"); //"\n" corresponding with output
+        }catch (Exception e){
+          e.getStackTrace();
+        }
       }
     });
   }
