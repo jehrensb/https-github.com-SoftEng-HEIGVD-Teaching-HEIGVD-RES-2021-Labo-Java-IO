@@ -21,13 +21,16 @@ public class DFSFileExplorer implements IFileExplorer {
 
   @Override
   public void explore(File rootDirectory, IFileVisitor visitor) {
+
       if(rootDirectory == null)
           return;
       if(visitor == null)
           return;
+      visitor.visit(rootDirectory);
+
       File[] listOfFilesAndDirectory = rootDirectory.listFiles();
       if (listOfFilesAndDirectory == null) {
-          return;
+          return ;
       }
 
       Arrays.sort(listOfFilesAndDirectory); // see discussion on telegram group
