@@ -1,5 +1,6 @@
 package ch.heigvd.res.labio.impl;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.logging.Logger;
 
 /**
@@ -20,7 +21,26 @@ public class Utils {
    * contain any line separator, then the first element is an empty string.
    */
   public static String[] getNextLine(String lines) {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+        final String  SEPARATOR_WINDOWS = "\r\n";
+        final String  SEPARATOR_MAC_OLD = "\r";
+        final String  SEPARATOR_UNIX = "\n";
+        String currentSeparator;
+
+        if(lines.contains(SEPARATOR_WINDOWS)) {
+            currentSeparator = SEPARATOR_WINDOWS;
+        }
+        else if(lines.contains(SEPARATOR_MAC_OLD)) {
+            currentSeparator = SEPARATOR_MAC_OLD;}
+        else {
+            currentSeparator = SEPARATOR_UNIX;
+        }
+
+        int positionSecondLine = lines.indexOf(currentSeparator) + currentSeparator.length();
+        String[] result = new String[2];
+        result[0] = lines.substring(0, positionSecondLine);
+        result[1] = lines.substring(positionSecondLine);
+
+        return result;
   }
 
 }
