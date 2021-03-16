@@ -61,9 +61,10 @@ public abstract class FileTransformer implements IFileVisitor {
         bufferedWriter.write(car);
       }
 
-      reader.close();
-      writer.flush();
-      writer.close();
+      //Best to use buffered IO
+      bufferedReader.close();
+      bufferedWriter.flush();
+      bufferedWriter.close();
     } catch (IOException ex) {
       LOG.log(Level.SEVERE, null, ex);
     }
