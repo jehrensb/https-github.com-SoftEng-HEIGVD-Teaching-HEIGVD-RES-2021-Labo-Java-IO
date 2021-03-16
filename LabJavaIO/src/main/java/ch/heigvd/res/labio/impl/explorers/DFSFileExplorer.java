@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +33,7 @@ public class DFSFileExplorer implements IFileExplorer {
             visitor.visit(rootDirectory);
             try {
                 Files.list(Paths.get(rootDirectory.getPath()))
+                        .sorted(Comparator.comparing(Path::getFileName))
                         .map(Path::toFile)
                         .forEach(file -> {
                             if (file.isDirectory())
