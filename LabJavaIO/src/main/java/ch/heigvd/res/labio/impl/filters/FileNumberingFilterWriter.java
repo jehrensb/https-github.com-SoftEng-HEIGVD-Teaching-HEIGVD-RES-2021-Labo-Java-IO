@@ -28,6 +28,9 @@ public class FileNumberingFilterWriter extends FilterWriter {
     super(out);
   }
 
+  /**
+   * Small method to write a line with the line number and a tab.
+   */
   private void writeLine() throws IOException {
     String s = ++lineNo + "\t";
     super.write(s, 0, s.length());
@@ -71,7 +74,6 @@ public class FileNumberingFilterWriter extends FilterWriter {
     if(lastChar == '\r' || c == '\n'){
       writeLine();
     }
-
     lastChar = c;
   }
 

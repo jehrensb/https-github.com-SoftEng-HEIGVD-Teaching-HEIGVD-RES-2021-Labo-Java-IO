@@ -3,6 +3,7 @@ package ch.heigvd.res.labio.impl.transformers;
 import ch.heigvd.res.labio.interfaces.IFileVisitor;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * The subclasses have to implement the decorateWithFilters method, which instantiates
  * a list of filters and decorates the output writer with them.
  * 
- * @author Olivier Liechti
+ * @author Olivier Liechti & Delphine Scherler
  */
 public abstract class FileTransformer implements IFileVisitor {
 
@@ -52,10 +53,19 @@ public abstract class FileTransformer implements IFileVisitor {
        * writer has been decorated by the concrete subclass!). You need to write a loop to read the
        * characters and write them to the writer.
        */
-      
-      reader.close();
-      writer.flush();
-      writer.close();
+      BufferedReader br = new BufferedReader(reader);
+      BufferedWriter bw = new BufferedWriter(writer);
+
+      int c = br.read();
+      while (c != -1) {
+        bw.write(c);
+        c = br.read();
+      }
+
+      br.close();
+      bw.flush();
+      bw.close();
+
     } catch (IOException ex) {
       LOG.log(Level.SEVERE, null, ex);
     }
