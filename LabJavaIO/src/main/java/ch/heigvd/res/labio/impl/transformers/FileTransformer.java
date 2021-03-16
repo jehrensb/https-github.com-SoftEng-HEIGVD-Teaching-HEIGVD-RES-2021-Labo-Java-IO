@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  * a list of filters and decorates the output writer with them.
  * 
  * @author Olivier Liechti
+ * @author Corentin Zeller
  */
 public abstract class FileTransformer implements IFileVisitor {
 
@@ -51,8 +52,18 @@ public abstract class FileTransformer implements IFileVisitor {
        * There is a missing piece here: you have an input reader and an ouput writer (notice how the 
        * writer has been decorated by the concrete subclass!). You need to write a loop to read the
        * characters and write them to the writer.
+       * (ok now, done)
        */
-      
+
+        BufferedWriter writeBuffer = new BufferedWriter(writer);
+        BufferedReader readBuffer = new BufferedReader(reader);
+
+        int index = readBuffer.read();
+        while(index != -1) {
+            writeBuffer.write(index);
+            index = readBuffer.read();
+        }
+
       reader.close();
       writer.flush();
       writer.close();
