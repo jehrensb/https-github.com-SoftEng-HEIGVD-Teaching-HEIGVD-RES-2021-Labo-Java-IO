@@ -21,6 +21,10 @@ public class DFSFileExplorer implements IFileExplorer {
 
   @Override
   public void explore(File rootDirectory, IFileVisitor visitor) {
+      if(rootDirectory == null)
+          return;
+      if(visitor == null)
+          return;
       File[] listOfFilesAndDirectory = rootDirectory.listFiles();
       if (listOfFilesAndDirectory == null) {
           return;
@@ -28,7 +32,6 @@ public class DFSFileExplorer implements IFileExplorer {
 
       Arrays.sort(listOfFilesAndDirectory); // see discussion on telegram group
       visitor.visit(rootDirectory);
-      // Files first, dir after
       for(File file : listOfFilesAndDirectory) {
           if(file.isDirectory()) {
               explore(file, visitor);
