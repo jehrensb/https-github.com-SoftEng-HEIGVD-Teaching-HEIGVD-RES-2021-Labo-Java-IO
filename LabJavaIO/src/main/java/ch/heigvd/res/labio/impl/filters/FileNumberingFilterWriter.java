@@ -19,7 +19,6 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
     private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
     private int nbLine = 1, lastChar;
-    private boolean firstLine = true;
 
     public FileNumberingFilterWriter(Writer out) {
         super(out);
@@ -39,10 +38,8 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
     @Override
     public void write(int c) throws IOException {
-        if(firstLine){
+        if(nbLine == 1)
             out.write(nbLine++ + "\t");
-            firstLine = false;
-        }
 
         if(lastChar == '\r' && c != '\n')
             out.write(nbLine++ + "\t");
