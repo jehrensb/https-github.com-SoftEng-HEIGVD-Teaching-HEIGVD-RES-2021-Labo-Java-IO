@@ -68,12 +68,12 @@ public class FileNumberingFilterWriter extends FilterWriter {
       writeLine();
     }
 
-    super.write(c);
-
-    //Handle write with an int
-    if(lastChar == '\r' || c == '\n'){
+    if((lastChar == '\r' && c != '\n') || lastChar == '\n'){
       writeLine();
     }
+
+    super.write(c);
+
     lastChar = c;
   }
 

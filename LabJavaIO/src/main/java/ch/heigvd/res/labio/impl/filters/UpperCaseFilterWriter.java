@@ -26,7 +26,7 @@ public class UpperCaseFilterWriter extends FilterWriter {
     for(int i = 0; i < cbuf.length; i++) {
       convert[i] = Character.toUpperCase(cbuf[i]);
     }
-    write(convert, off, len);
+    super.write(convert, off, len);
   }
 
   @Override
