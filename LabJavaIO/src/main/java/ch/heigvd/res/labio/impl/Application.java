@@ -27,8 +27,9 @@ public class Application implements IApplication {
      * to where the Java application is invoked.
      */
     public static String WORKSPACE_DIRECTORY = "./workspace/quotes";
-
+    public static final  String QUOTE_FILE_EXTENSION = ".utf8";
     private static final Logger LOG = Logger.getLogger(Application.class.getName());
+    private static int creatCount = 0;
 
     public static void main(String[] args) {
 
@@ -96,8 +97,10 @@ public class Application implements IApplication {
                  * client to fetch quotes. We have removed a single line from this method. It is a call to
                  * one method provided by this class, which is responsible for storing the content of the
                  * quote in a text file (and for generating the directories based on the tags).
+                 * (ok now, done by CZR)
                  */
 
+                storeQuote(quote, "quotes-" + i + QUOTE_FILE_EXTENSION);
 
                 LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
                 for (String tag : quote.getTags()) {
@@ -134,7 +137,21 @@ public class Application implements IApplication {
      * @throws IOException
      */
     void storeQuote(Quote quote, String filename) throws IOException {
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+        StringBuilder pathBuilder = new StringBuilder();
+        pathBuilder.append(WORKSPACE_DIRECTORY + "/");
+
+        // tags subfolders
+        for (String tag : quote.getTags()) {
+            pathBuilder.append(tag + "/");
+        }
+
+        // folder creation
+        File fileDirectories = new File(pathBuilder.toString());
+        fileDirectories.mkdirs();
+
+        // file creation
+        File newQuote = new File(fileDirectories, filename);
+        newQuote.createNewFile();
     }
 
     /**
