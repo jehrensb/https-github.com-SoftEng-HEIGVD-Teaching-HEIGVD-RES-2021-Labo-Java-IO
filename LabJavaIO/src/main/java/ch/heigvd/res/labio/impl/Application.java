@@ -100,7 +100,7 @@ public class Application implements IApplication {
                  * (ok now, done by CZR)
                  */
 
-                storeQuote(quote, "quotes-" + i + QUOTE_FILE_EXTENSION);
+                storeQuote(quote, "quote-" + i + QUOTE_FILE_EXTENSION);
 
                 LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
                 for (String tag : quote.getTags()) {
@@ -127,7 +127,7 @@ public class Application implements IApplication {
      * <p>
      * - with quote.getTags(), it gets a list of tags and uses
      * it to create sub-folders (for instance, if a quote has three tags "A", "B" and
-     * "C", it will be stored in /quotes/A/B/C/quotes-n.utf8.
+     * "C", it will be stored in /quotes/A/B/C/quote-n.utf8.
      * <p>
      * - with quote.getQuote(), it has access to the text of the quote. It stores
      * this text in UTF-8 file.
