@@ -64,6 +64,11 @@ public abstract class FileTransformer implements IFileVisitor {
             index = readBuffer.read();
         }
 
+        // need to close buffered reader/writer
+      writeBuffer.flush();
+      writeBuffer.close();
+      readBuffer.close();
+
       reader.close();
       writer.flush();
       writer.close();
