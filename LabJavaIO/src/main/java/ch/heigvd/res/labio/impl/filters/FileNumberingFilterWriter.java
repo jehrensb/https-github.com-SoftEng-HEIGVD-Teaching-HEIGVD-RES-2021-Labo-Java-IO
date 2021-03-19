@@ -3,6 +3,8 @@ package ch.heigvd.res.labio.impl.filters;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -23,19 +25,56 @@ public class FileNumberingFilterWriter extends FilterWriter {
     super(out);
   }
 
+  private int countLines = 0;
+  private boolean isMac = false; //Util for MAC
+
   @Override
   public void write(String str, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    if(str != null){
+      for(int i = 0; i < len; i++){
+        write(str.charAt(off+i));
+      }
+    }
+
   }
 
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    if(cbuf != null){
+      for(int i = 0; i < len; i++){
+        write(cbuf[off + i]);
+      }
+    }
+
+
   }
 
   @Override
   public void write(int c) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    // \n Unix
+    // \r MacOs
+    // \r\n Windows
+
+    if(countLines == 0)  out.write(++countLines + "\t");
+
+    if(isMac){
+      if(c != '\n')  out.write(++countLines + "\t");
+      isMac = false;
+    }
+
+    out.write(c);
+
+    if(c == '\n') out.write(++countLines + "\t");
+    if(c == '\r') isMac = true;
+
   }
+
+
+
 
 }
