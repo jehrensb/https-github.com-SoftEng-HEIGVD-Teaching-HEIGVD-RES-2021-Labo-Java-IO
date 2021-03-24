@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
+  private int lineCount = 0;
+  private int previousCharProcessed;
 
   public FileNumberingFilterWriter(Writer out) {
     super(out);
@@ -25,17 +27,37 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
   @Override
   public void write(String str, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    for(int i = off; i < off + len; ++i) {
+      write(str.charAt(i));
+    }
   }
 
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    for(int i = off; i < off + len; ++i) {
+      write(cbuf[i]);
+    }
   }
 
   @Override
   public void write(int c) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    if(previousCharProcessed == '\r' && c != '\n' || lineCount == 0) {
+      out.write(getLinePrefix());
+    }
+
+    out.write(c);
+
+    if(c == '\n') {
+      out.write(getLinePrefix());
+    }
+
+    previousCharProcessed = c;
+  }
+
+  private String getLinePrefix() {
+    lineCount++;
+    return lineCount + "\t";
   }
 
 }
