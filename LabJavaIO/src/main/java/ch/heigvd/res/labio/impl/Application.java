@@ -138,9 +138,9 @@ public class Application implements IApplication {
       directories.mkdirs();
       File newQuote = new File(directories, filename);
       newQuote.createNewFile();
-//    FileWriter writer = new FileWriter(filePath);
-//    writer.write(quote.getQuoteSplitInLines());
-//    writer.close();
+    FileWriter writer = new FileWriter(filePath + "/" + filename);
+    writer.write(quote.getQuote());
+    writer.close();
 
   }
   
@@ -158,6 +158,12 @@ public class Application implements IApplication {
          * of the the IFileVisitor interface inline. You just have to add the body of the visit method, which should
          * be pretty easy (we want to write the filename, including the path, to the writer passed in argument).
          */
+        try{
+          writer.write(file.getPath());
+        } catch(IOException e){
+          System.out.println(e.getMessage());
+        }
+
       }
     });
   }
