@@ -18,24 +18,40 @@ import java.util.logging.Logger;
 public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
-
+  private int lineNB = 1;
+  private int lastChar;
   public FileNumberingFilterWriter(Writer out) {
     super(out);
   }
 
   @Override
   public void write(String str, int off, int len) throws IOException {
-    out.write(str, off, len);
+    write(str.toCharArray(), off, len);
   }
 
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException {
-    out.write(cbuf, off, len);
+    for(int i = off; i < off + len; i++){
+      write(cbuf[i]);
+    }
   }
 
   @Override
   public void write(int c) throws IOException {
+    if (lineNB == 1){
+      out.write(lineNB++ + "\t");
+    }
+    if(lastChar == '\r' && c != '\n'){
+      out.write(lineNB++ + "\t");
+    }
+
     out.write(c);
+
+    if(c == '\n'){
+      out.write(lineNB++ + "\t");
+    }
+
+    lastChar = c;
   }
 
 }
