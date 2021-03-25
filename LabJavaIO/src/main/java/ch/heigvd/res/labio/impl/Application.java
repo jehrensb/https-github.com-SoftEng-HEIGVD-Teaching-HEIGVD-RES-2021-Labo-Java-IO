@@ -136,9 +136,9 @@ public class Application implements IApplication {
     String filePath = WORKSPACE_DIRECTORY + "/" +  String.join("/", quote.getTags());
     File directories = new File(filePath);
       directories.mkdirs();
-      File newQuote = new File(directories, filename);
-      newQuote.createNewFile();
-    FileWriter writer = new FileWriter(newQuote);
+      File newQuoteFile = new File(directories, filename);
+      newQuoteFile.createNewFile();
+    FileWriter writer = new FileWriter(newQuoteFile);
     writer.write(quote.getQuote());
     writer.close();
 

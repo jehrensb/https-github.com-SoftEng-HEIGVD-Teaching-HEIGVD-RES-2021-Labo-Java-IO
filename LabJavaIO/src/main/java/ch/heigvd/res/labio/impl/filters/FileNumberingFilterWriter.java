@@ -1,5 +1,7 @@
 package ch.heigvd.res.labio.impl.filters;
 
+import ch.heigvd.res.labio.impl.Utils;
+
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -18,10 +20,14 @@ import java.util.logging.Logger;
 public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
-  private int lineNB = 1;
+  private int lineNB = 0;
   private int lastChar;
   public FileNumberingFilterWriter(Writer out) {
     super(out);
+  }
+
+  private void addLine() throws IOException{
+    out.write(++lineNB + "\t");
   }
 
   @Override
@@ -38,20 +44,20 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
   @Override
   public void write(int c) throws IOException {
-    if (lineNB == 1){
-      out.write(lineNB++ + "\t");
+    if (lineNB == 0){
+      addLine();
     }
-    if(lastChar == '\r' && c != '\n'){
-      out.write(lineNB++ + "\t");
+    if(lastChar == '\r' && c != '\n'){ // Vérifie que ce n'est pas un \r\n
+      addLine();
     }
 
     out.write(c);
-
-    if(c == '\n'){
-      out.write(lineNB++ + "\t");
-    }
-
     lastChar = c;
+    if(lastChar == '\n'){
+      addLine();
+    }
+    // Attention ! Si le tout dernier char envoyé est un \r, on devrait ajouter un numéro de ligne
+    // Je n'ai pas trouvé comment résoudre ce problème, il faudrait savoir que c'est la fin du texte...
   }
 
 }

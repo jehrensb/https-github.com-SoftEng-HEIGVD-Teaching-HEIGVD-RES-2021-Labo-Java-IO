@@ -35,7 +35,7 @@ public interface IApplication {
    * @param numberOfQuotes
    * @throws IOException
    */
-  public void fetchAndStoreQuotes(int numberOfQuotes) throws IOException;
+  void fetchAndStoreQuotes(int numberOfQuotes) throws IOException;
 
-  public void processQuoteFiles() throws IOException;
+  void processQuoteFiles() throws IOException;
 }

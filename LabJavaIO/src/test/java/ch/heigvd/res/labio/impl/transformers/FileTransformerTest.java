@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,7 +24,7 @@ public class FileTransformerTest {
     FileTransformer ft = new NoOpFileTransformer();
     File inputFile = new File("./target/tmp/test.txt");
     File outputFile = new File("./target/tmp/test.txt.out");
-    OutputStreamWriter writer = new OutputStreamWriter( new FileOutputStream(inputFile), "UTF-8" );
+    OutputStreamWriter writer = new OutputStreamWriter( new FileOutputStream(inputFile), StandardCharsets.UTF_8);
     writer.write("Les bons élèves sont tous très assidus.\nLes bons maîtres sont appliqués.");
     writer.flush();
     writer.close();
