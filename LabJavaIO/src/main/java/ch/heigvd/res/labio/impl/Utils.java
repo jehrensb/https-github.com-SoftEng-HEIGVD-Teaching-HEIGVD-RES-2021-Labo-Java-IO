@@ -21,14 +21,18 @@ public class Utils {
    */
   public static String[] getNextLine(String lines) {
     String[] resp = new String[2];
-    int splitAt;
     // Search for any line separator
-    splitAt = lines.indexOf("\r\n");
-    if( splitAt == -1){
-      splitAt = lines.indexOf("\r");
-      if(splitAt == -1){
-        splitAt = lines.indexOf("\n");
-      }
+    int splitAtRN = lines.indexOf("\r\n");
+    int splitAtR = lines.indexOf("\r");
+    int splitAtN = lines.indexOf("\n");
+
+    int splitAt = -1;
+    if (splitAtRN != -1){
+      splitAt = splitAtRN + 2;
+    } else if (splitAtR != -1) {
+      splitAt = splitAtR + 1;
+    } else if (splitAtN != -1) {
+      splitAt = splitAtN + 1;
     }
 
     // Proceed to split if a separator was found
